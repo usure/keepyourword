@@ -6,9 +6,14 @@ app = Flask(__name__)
 def create_database():
     """
     Creates a SQLite database named 'books.db' with a table named 'books' if it does not already exist.
-    The 'books' table has three columns: 'id' (INTEGER PRIMARY KEY), 'title' (TEXT), and 'author' (TEXT).
     
-    This function does not take any parameters and does not return anything.
+    The 'books' table has four columns: 'id', 'title', 'author', and 'pages_read', representing the book's unique identifier, title, author, and number of pages read, respectively.
+    
+    Parameters:
+        None
+    
+    Returns:
+        None
     """
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
@@ -76,10 +81,10 @@ def delete_book(book_id):
 @app.route('/done_today/<int:book_id>')
 def done_today(book_id):
     """
-    Deletes a book from the database based on the provided book ID.
+    Updates the 'pages_read' field of a book in the database to 0 based on the provided book ID.
 
     Parameters:
-        book_id (int): The ID of the book to be deleted.
+        book_id (int): The ID of the book to be marked as done.
 
     Returns:
         redirect: A redirect response to the book list page.
