@@ -12,7 +12,7 @@ def create_database():
     """
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT, pages_read INTEGER)''')
     conn.commit()
     conn.close()
 
@@ -47,9 +47,10 @@ def add_book():
     """
     title = request.form['title']
     author = request.form['author']
+    pages_read = request.form['pages_read']
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute('INSERT INTO books (title, author) VALUES (?, ?)', (title, author))
+    c.execute('INSERT INTO books (title, author, pages_read) VALUES (?, ?, ?)', (title, author, pages_read))
     conn.commit()
     conn.close()
     return redirect(url_for('book_list'))
@@ -68,6 +69,24 @@ def delete_book(book_id):
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
     c.execute('DELETE FROM books WHERE id = ?', (book_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('book_list'))
+
+@app.route('/done_today/<int:book_id>')
+def done_today(book_id):
+    """
+    Deletes a book from the database based on the provided book ID.
+
+    Parameters:
+        book_id (int): The ID of the book to be deleted.
+
+    Returns:
+        redirect: A redirect response to the book list page.
+    """
+    conn = sqlite3.connect('books.db')
+    c = conn.cursor()
+    c.execute('UPDATE books SET pages_read= 0 WHERE id = ?', (book_id,))
     conn.commit()
     conn.close()
     return redirect(url_for('book_list'))
