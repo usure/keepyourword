@@ -22,6 +22,12 @@
         <label for="pages_read">Pages Read:</label>
         <input type="number" id="pages_read" name="pages_read" required>
         <br>
+        <label for="interval">Interval:</label>
+        <input type="number" id="interval" name="interval" required>
+        <br>
+        <label for="interval_denom">Minutes? Hours? Days?:</label>
+        <input type="text" id="interval_denom" name="interval_denom" required>
+        <br>
         <button type="submit">Add Book</button>
     </form>
 
@@ -31,7 +37,7 @@
             <li>
                 {{ book[1] }} by {{ book[2] }} 
                 <p class="indent">
-                    Read {{ book[3] }} pages each day!
+                    Read {{ book[3] }} pages every {{ book[4] }} {{ book[5] }} !
                 </p>
                 <a href="/done_today/{{ book[0] }}">Done!</a>
                 <a href="/delete_book/{{ book[0] }}">Delete</a>

@@ -17,7 +17,7 @@ def create_database():
     """
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT, pages_read INTEGER)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT, pages_read INTEGER, interval INTEGER, interval_denom TEXT)''')
     conn.commit()
     conn.close()
 
@@ -53,9 +53,11 @@ def add_book():
     title = request.form['title']
     author = request.form['author']
     pages_read = request.form['pages_read']
+    interval = request.form['interval']
+    interval_denom = request.form['interval_denom']    
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute('INSERT INTO books (title, author, pages_read) VALUES (?, ?, ?)', (title, author, pages_read))
+    c.execute('INSERT INTO books (title, author, pages_read, interval, interval_denom) VALUES (?, ?, ?, ?, ?)', (title, author, pages_read, interval, interval_denom))
     conn.commit()
     conn.close()
     return redirect(url_for('book_list'))
