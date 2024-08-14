@@ -91,7 +91,7 @@ def done_today(book_id):
     """
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute('UPDATE books SET pages_read= 0 WHERE id = ?', (book_id,))
+    c.execute('UPDATE books SET pages_read = 0 WHERE id = ?', (book_id,))
     conn.commit()
     conn.close()
     return redirect(url_for('book_list'))
