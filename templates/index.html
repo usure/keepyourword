@@ -26,7 +26,11 @@
         <input type="number" id="interval" name="interval" required>
         <br>
         <label for="interval_denom">Minutes? Hours? Days?:</label>
-        <input type="text" id="interval_denom" name="interval_denom" required>
+        <select name="interval_denom" id="interval_denom">
+            <option value="minutes">Minutes</option>
+            <option value="hours">Hours</option>
+            <option value="days">Days</option>
+        </select>
         <br>
         <button type="submit">Add Book</button>
     </form>
